@@ -1,0 +1,15 @@
+{%extends 'base.html'%}}
+{% block head %}
+    <title>Confirm Email</title>
+{% endblock %}
+{% block content %}
+    <main>
+        <div>
+            <h1>Confirm Email</h1>
+            <p>Thank you for registering to Study Buddy Finder!
+                Please confirm your email address by clicking the link below:</p>
+            <a href="{{ confirm_url }}">Confirm your email</a>
+        </div>
+    </main>
+{% endblock %}
+

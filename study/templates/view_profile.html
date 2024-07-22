@@ -1,0 +1,37 @@
+{% extends 'navbar.html' %}
+{% block title %}View Profile{% endblock %}
+{% block content %}
+<main>
+    <div>
+       <h1>{{ user.username }}'s Profile</h1>
+        <p>The following are the options you selected when creating your profile</p>
+    </div>
+    <div>
+        <h3>Personal Information</h3>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+    </div>
+    <div>
+        <h3>Education</h3>
+        <p><strong>School:</strong> {{ user.school }}</p>
+        <p><strong>Strong Subjects:</strong> {{ user.strong_subjects.split(',') | join(', ') }}</p>
+        <p><strong>Weak Subjects:</strong> {{ user.weak_subjects.split(',') | join(', ') }}</p>
+    </div>
+    <div>
+        <h3>Other</h3>
+        <p><strong>Primary Language:</strong> {{ user.primary_language }}</p>
+        <p><strong>Secondary Languages:</strong> {{ user.secondary_languages.split(',') | join(', ') }}</p>
+        <p><strong>Days Available:</strong> {{ user.days.split(',') | join(', ') }}</p>
+        <p><strong>Times Available:</strong> {{ user.times.split(',') | join(', ') }}</p>
+    </div>
+    <div>
+        <h3>Actions</h3>
+        <form action="{{ url_for('profileupdate') }}" method="post"> 
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+        <form action="{{ url_for('delete_profile') }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete Profile</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

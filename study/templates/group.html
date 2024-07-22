@@ -1,0 +1,83 @@
+{% extends 'navbar.html' %}
+{% block title %}Groups{% endblock %}
+{% block content %}
+    <h1>Groups</h1>
+    
+    {% if all_groups|length == 0 %}
+        <p>No groups exist yet.</p>
+        <a href="{{ url_for('create_group') }}">Create a Group</a>
+    {% else %}
+        <h3>Available Groups</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Days</th>
+                    <th>Times</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in all_groups %}
+                    <tr>
+                        <td>{{ group.id }}</td>
+                        <td>{{ group.name }}</td>
+                        <td>{{ group.subject }}</td>
+                        <td>{{ group.days }}</td>
+                        <td>{{ group.times }}</td>
+                        <td>
+                            {% if group.members|length < 10 %}
+                                <a href="{{ url_for('join_group', group_id=group.id) }}">Join Group</a>
+                            {% else %}
+                                <span>Full</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h3>Your Groups</h3>
+    {% if user_groups|length == 0 %}
+        <p>You are not a member of any groups yet.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Days</th>
+                    <th>Times</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in user_groups %}
+                    <tr>
+                        <td>{{ group.id }}</td>
+                        <td>{{ group.name }}</td>
+                        <td>{{ group.subject }}</td>
+                        <td>{{ group.days }}</td>
+                        <td>{{ group.times }}</td>
+                        <td>
+                            {% if group.creator == current_user.username %}
+                                <a href="{{ url_for('delete_group', group_id=group.id) }}">Delete Group</a>
+                                <a href="{{ url_for('leave_group', group_id=group.id) }}">Leave Group</a>
+                            {% else %}
+                                <a href="{{ url_for('leave_group', group_id=group.id) }}">Leave Group</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <h3>Create a Group</h3>
+    <div>
+        <a href="{{url_for('create_group')}}">Create a new Group</a>
+    </div>
+{% endblock %}

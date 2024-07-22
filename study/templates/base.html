@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}{% endblock %}
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0ad4e;
+            color: white;
+            font-size: 18px;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .flash-message.hide {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="top-header ">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="alert-container">
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    var flashMessages = document.querySelectorAll('.flash-message');
+                    flashMessages.forEach(function(message) {
+                        message.classList.add('hide');
+                    });
+                }, 5000); // 5000ms = 5 seconds
+            });
+        </script>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Buddy Study Finder</p>
+            </div>
+        </div>
+</body>
+
+</html>

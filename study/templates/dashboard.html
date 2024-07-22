@@ -1,0 +1,186 @@
+{% extends 'navbar.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <nav class="sidebar">
+        <div class="logo">ALU</div>
+        <ul>
+            <li><button onclick="navigateTo('http://127.0.0.1:5000/dashboard')" class="sidebar-btn"><i class="fas fa-home"></i>Home</button></li>
+            <li><button onclick="navigateTo('http://127.0.0.1:5000/profile/view')" class="sidebar-btn"><i class="fas fa-user"></i>Profile</button></li>
+            <li><button onclick="navigateTo('http://127.0.0.1:5000/home')" class="sidebar-btn"><i class="fas fa-sign-out-alt"></i>Logout</button></li>
+            <li><button onclick="navigateTo('http://127.0.0.1:5000/group')" class="sidebar-btn"><i class="fas fa-users"></i>Group</button></li>
+        </ul>
+    </nav>
+    
+    <main class="content">
+        <header>
+            <h1>Dashboard</h1>
+            <div class="header-actions">
+                <!-- Add any header actions here -->
+            </div>
+        </header>
+
+        <section id="upcoming-sessions" class="section">
+            <h3>Upcoming Sessions</h3>
+            <!-- Display upcoming sessions, if none ask the user to create a new session -->
+            <!-- Only users in a group can create a session -->
+        </section>
+        <section id="past-sessions" class="section">
+            <h3>Past Sessions</h3>
+            <!-- Display past sessions -->
+        </section>
+        <section id="your-groups" class="section">
+            <h3>Your Groups</h3>
+            {% if groups|length == 0 %}
+                <p>You are not part of any groups yet.</p>
+                <p>Create a group or join one</p>
+            {% else %}
+                <table class="groups-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Days</th>
+                            <th>Times</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for group in groups %}
+                        <tr>
+                            <td>{{ group.id }}</td>
+                            <td>{{ group.name }}</td>
+                            <td>{{ group.subject }}</td>
+                            <td>{{ group.days }}</td>
+                            <td>{{ group.times }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+        
+        <section id="your-subjects" class="section">
+            <h3>Your Subjects</h3>
+            <div>
+                <h4>Strong Subject(s)</h4>
+                {% if strong_subjects %}
+                    <ul>
+                        {% for subject in strong_subjects %}
+                            <li>{{ subject }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have not set up your strong subjects yet. Please update your profile.</p>
+                {% endif %}
+            </div>
+            <div>
+                <h4>Weak Subject(s)</h4>
+                {% if weak_subjects %}
+                    <ul>
+                        {% for subject in weak_subjects %}
+                            <li>{{ subject }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have not set up your weak subjects yet. Please update your profile.</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    .dashboard-container {
+        display: flex;
+    }
+    .sidebar {
+        width: 200px;
+        background-color: #0c2340;
+        color: white;
+        height: 100vh;
+        padding: 20px;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 15px;
+    }
+    .sidebar-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        color: white;
+        text-align: left;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .sidebar-btn i {
+        margin-right: 10px;
+    }
+    .sidebar-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .content {
+        flex-grow: 1;
+        padding: 20px;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .section {
+        margin-top: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+    }
+    th, td {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        text-align: left;
+        color: #333;
+    }
+    th {
+        background-color: #0c2340;
+        color: white;
+    }
+    .groups-table {
+        margin-bottom: 1rem;
+    }
+    ul {
+        list-style-type: disc;
+        padding-left: 2rem;
+    }
+    p {
+        color: #333;
+    }
+</style>
+
+<script>
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+</script>
+{% endblock %}
+

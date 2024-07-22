@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%block title%}Create Profile{%endblock%}
+{%block content%}
+<main>
+    <div class="container">
+        <h2>Profile</h2>
+        <form method="POST" action="/profile">
+            {{form.hidden_tag()}}
+
+            {{form.school.label}}
+            {{form.school()}}
+            <br>
+            {{form.primary_language.label}}
+            {{form.primary_language()}}
+            <br>
+            {{form.secondary_languages.label}}
+            {{form.secondary_languages(size=5, multiple=True)}}
+            <br>
+            {{form.days.label}}
+            {{form.days(size=7, multiple=True)}}
+            <br>
+            {{form.times.label}}
+            {{form.times(size=3, multiple=True)}}
+            <br>
+            {{form.strong_subjects.label}}
+            {{form.strong_subjects(size=5, multiple=True)}}
+            <br>
+            {{form.weak_subjects.label}}
+            {{form.weak_subjects(size=5, multiple=True)}}
+            <br>
+            {{form.submit()}}
+        </form>
+    </div>
+    <p>To select more that one option, hold down on the Command button on Mac, or the Contorl button on Windows</p>
+</main>
+{%endblock%}
